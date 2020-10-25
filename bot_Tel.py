@@ -8,7 +8,7 @@ os.environ["TZ"] = "Asia/Kolkata"
 
 
 # print(time.time())
-TOKEN = '1002713211:AAF4UxJg-sqEtVQVEEqWUtI_BplLQuFQrs4'  # replace token which you got from @botfather
+TOKEN = 'Enter Token Here'  # replace token which you got from @botfather
 bot = telebot.TeleBot(token=TOKEN)
 
 from datetime import datetime as date
