@@ -8,7 +8,7 @@ os.environ["TZ"] = "Asia/Kolkata"
 
 
 # print(time.time())
-TOKEN = 'Token here'  # replace token which you got from @botfather
+TOKEN = '1002713211:AAF4UxJg-sqEtVQVEEqWUtI_BplLQuFQrs4'  # replace token which you got from @botfather
 bot = telebot.TeleBot(token=TOKEN)
 
 from datetime import datetime as date
@@ -69,28 +69,64 @@ def sub(message):
     bot.reply_to(message, '1./toc \n2./gtc \n3./dc \n4./ss \n5./sc \n6./mm \n')
 
 
+@bot.message_handler(commands=['now'])
+def now(message):
+    try:
+        sub = time_table[date.today().weekday()]
+    except Exception:
+        pass
+
+    time1 = str(date.time(date.now()))
+    min = int(time1[3:5])
+    if min < 15:
+        '''hr = int(time1[:2]) - 1
+        print(hr)
+        corrected_time = str(hr) + ':00'''''
+        bot.reply_to(message, 'no ongoing class')
+
+    else:
+        try:
+            bot.reply_to(message, sub[time1[:2] + ':00'])
+        except Exception:
+            bot.reply_to(message, 'no ongoing class')
 
 
+@bot.message_handler(commands=['next'])
+def next(message):
+    try:
+        sub = time_table[date.today().weekday()]
+    except Exception:
+        pass
 
+    time1 = str(date.time(date.now()))
+    min = int(time1[3:5])
+    if min < 15:
+        hr = int(time1[:2])
+        # print(hr)
+        corrected_time = str(hr) + ':00'
+        try:
+            if hr <= 9:
+                corrected_time = '0'+corrected_time
+                bot.reply_to(message, sub[corrected_time[:5]])
+            else:
+                bot.reply_to(message, sub[corrected_time[:5]])
+        except Exception:
+            bot.reply_to(message,'no upcoming class')
 
-@bot.message_handler(func=lambda msg: msg.text is not None and 'love' in msg.text.lower())
-def love(message):
-    bot.send_message(message.chat.id, 'i love you more')
-
-
-@bot.message_handler(func=lambda msg: msg.text is not None and 'ummah' in msg.text.lower())
-def ummah(message):
-    bot.send_message(message.chat.id, 'ummah ummah')
-
-
-@bot.message_handler(func=lambda msg: msg.text is not None and 'smart' in msg.text and 'not' not in msg.text.lower())
-def smart(message):
-    bot.send_message(message.chat.id, 'uthara')
-
-
-@bot.message_handler(func=lambda msg: msg.text is not None and 'smart' and 'not' in msg.text.lower())
-def not_smart(message):
-    bot.send_message(message.chat.id, 'madhav')
+    else:
+        hr = int(time1[:2]) + 1
+        #print(hr)
+        corrected_time = str(hr) + ':00'
+        print(corrected_time)
+        try:
+            if hr <= 9:
+                corrected_time = '0'+corrected_time
+                #print(sub[corrected_time[:5]])
+                bot.reply_to(message, sub[corrected_time[:5]])
+            else:
+                bot.reply_to(message, sub[corrected_time[:5]])
+        except Exception:
+            bot.reply_to(message,'no upcoming class f')
 
 
 while True:
